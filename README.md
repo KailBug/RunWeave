@@ -32,7 +32,17 @@ codex -c 'mcp_servers.runweave_probe.command="D:/RunWeave/bin/mcp-probe.exe"' -c
 
 配置依据：[Codex 官方 MCP 文档](https://developers.openai.com/codex/mcp)。nanobot、loopx 的具体项目、版本及接入方式待确认，不预设其配置与 Codex 相同。
 
-## 开发资料
+## 开发文档
+
+后续开发文档统一保存到 `docs/`，使用简体中文，并随代码同步维护。
+
+- [开发文档索引](docs/README.md)
+- [开发文档维护规范](docs/开发文档维护规范.md)
+- [当前开发进度](docs/进度/开发进度.md)
+
+## 总体规划资料
+
+根目录现有文档属于项目总体规划，不列入开发文档。
 
 - [最小实现任务清单](RunWeave-v0.0.1-最小实现任务清单.md)
 - [实施规划](RunWeave-v0.0.1-实施规划.md)
