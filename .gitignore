@@ -1,0 +1,68 @@
+# Go build outputs and local caches
+/.cache/
+/bin/
+/build/
+/dist/
+/runweave
+/mcp-probe
+*.exe
+*.exe~
+*.test
+*.test.exe
+
+# Local Go workspace (keep go.mod and go.sum tracked)
+/go.work
+/go.work.sum
+
+# Test coverage and profiling outputs
+/coverage/
+/coverage.out
+/coverage.txt
+/coverage.html
+*.coverprofile
+*.prof
+*.pprof
+/cpu.out
+/mem.out
+/trace.out
+
+# Local runtime state: SQLite databases, journals, logs and artifacts
+# Keep these scoped to runtime directories so test fixtures remain trackable.
+/data/
+/state/
+/run/
+/logs/
+/artifacts/
+/tmp/
+/temp/
+*.log
+*.pid
+
+# Local environment and credentials (commit templates, never real secrets)
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+*.local.yaml
+*.local.yml
+*.local.json
+*.local.toml
+/secrets/
+/credentials/
+
+# Editor settings and temporary files
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+
+# OS-generated files
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
