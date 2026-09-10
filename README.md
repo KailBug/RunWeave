@@ -16,7 +16,7 @@ go vet ./...
 
 `check` 启动真实子进程，验证 MCP 工具发现、输入/输出 schema、UTF-8 结构化返回、缺失参数拒绝和拒绝后的会话可用性；不调用模型。`serve` 通过 stdio 提供一个仅回显 nonce 的 `runweave_probe` 工具，stdout 专用于 MCP 协议。
 
-Linux 可使用 `go build -o bin/mcp-probe ./cmd/mcp-probe` 后执行 `./bin/mcp-probe check`。Windows 交叉编译及 WSL 验证记录见 [P0 技术验证](RunWeave-P0-技术验证记录.md)。
+Linux 可使用 `go build -o bin/mcp-probe ./cmd/mcp-probe` 后执行 `./bin/mcp-probe check`。Windows 交叉编译及 WSL 验证记录见 [P0 技术验证](docs/验证/2026-09-10-P0-MCP探针验证.md)。
 
 ## 外部 Harness 验证
 
@@ -42,8 +42,7 @@ codex -c 'mcp_servers.runweave_probe.command="D:/RunWeave/bin/mcp-probe.exe"' -c
 
 ## 总体规划资料
 
-根目录现有文档属于项目总体规划，不列入开发文档。
+根目录只维护两份总体规划，不列入开发文档：
 
-- [最小实现任务清单](RunWeave-v0.0.1-最小实现任务清单.md)
-- [实施规划](RunWeave-v0.0.1-实施规划.md)
-- [产品范围](RunWeave-v0.0.3-项目规划书.md)
+- [RunWeave 项目规划书](RunWeave项目规划书.md)：长期方向、产品范围与核心边界。
+- [RunWeave 3 个月开发规划书](RunWeave3个月开发规划书.md)：MCP 首版的 13 周目标、工作包和验收。
