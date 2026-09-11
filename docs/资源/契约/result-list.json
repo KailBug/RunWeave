@@ -1,0 +1,1 @@
+{"operation":"fs.list","duration_ms":2,"resources":[{"resource":"repo://demo","source":"unknown"}],"artifact_refs":[],"fs_list":{"entries":[{"name":"README.md","kind":"file","size_bytes":512},{"name":"src","kind":"directory"}],"truncated":false}}

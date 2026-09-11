@@ -2,7 +2,7 @@
 
 使用 Go 开发的 MCP 执行后端。先通过 Codex、nanobot、loopx 等外部 Harness 验证，再开发自有 Harness。
 
-当前处于 P0：仅实现独立的 MCP stdio 协议探针。Server、Node、远程文件操作、进程执行和持久化尚未实现。
+当前处于 P0：已有独立 MCP stdio 协议探针、SQLite/WebSocket/YAML/Linux 进程组隔离实验，以及三种业务操作的请求/结果校验和规范化摘要。正式 Server、Node、远程文件操作、进程执行和持久化服务尚未实现。
 
 ## 构建与检查
 
@@ -12,11 +12,16 @@
 go build -o bin/mcp-probe.exe ./cmd/mcp-probe
 ./bin/mcp-probe.exe check
 go vet ./...
+go test ./... -count=1
 ```
 
 `check` 启动真实子进程，验证 MCP 工具发现、输入/输出 schema、UTF-8 结构化返回、缺失参数拒绝和拒绝后的会话可用性；不调用模型。`serve` 通过 stdio 提供一个仅回显 nonce 的 `runweave_probe` 工具，stdout 专用于 MCP 协议。
 
 Linux 可使用 `go build -o bin/mcp-probe ./cmd/mcp-probe` 后执行 `./bin/mcp-probe check`。Windows 交叉编译及 WSL 验证记录见 [P0 技术验证](docs/验证/2026-09-10-P0-MCP探针验证.md)。
+
+基础依赖、Linux 进程组与 race 检查的复现步骤及结果见 [P0 基础依赖与进程验证](docs/验证/2026-09-10-P0基础依赖与进程验证.md)。这些测试使用临时数据库、loopback 连接和测试专用子进程，不开放业务执行入口。
+
+业务字段、错误与幂等规则见[业务请求与结果](docs/参考/业务请求与结果.md)，JSON 样例、固定摘要及 Windows/WSL 验证见[P0 业务契约验证](docs/验证/2026-09-10-P0业务契约验证.md)。`internal/contract` 仅作纯校验，不创建 execution 或执行操作。
 
 ## 外部 Harness 验证
 

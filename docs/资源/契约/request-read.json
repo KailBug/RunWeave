@@ -1,0 +1,1 @@
+{"request_id":"read-001","correlation_id":"demo-001","requirements":{"resources":[{"resource":"dataset://samples","revision":{"type":"owner_revision","value":"2026-09"}}]},"operation":{"type":"fs.read","target":{"resource":"dataset://samples","relative_path":"中文/data.bin"},"offset":0,"limit":4096},"timeout_ms":1000}

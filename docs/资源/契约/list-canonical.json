@@ -1,0 +1,1 @@
+{"requirements":{"os":"linux","capabilities":["fs.list"],"resources":[{"resource":"repo://demo"}]},"operation":{"type":"fs.list","target":{"resource":"repo://demo","relative_path":"."},"max_entries":1000},"timeout_ms":120000}

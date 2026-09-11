@@ -1,0 +1,1 @@
+{"operation":"fs.read","duration_ms":1,"resources":[],"artifact_refs":[],"fs_read":{"offset":0,"encoding":"utf8","data":"中文","bytes_returned":2,"eof":true}}

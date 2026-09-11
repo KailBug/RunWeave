@@ -1,0 +1,1 @@
+{"request_id":"bad-002","requirements":{"resources":[{"resource":"repo://demo"}]},"operation":{"type":"fs.read","target":{"resource":"dataset://missing","relative_path":"input.csv"}}}

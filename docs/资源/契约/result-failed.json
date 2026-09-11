@@ -1,0 +1,1 @@
+{"operation":"process.exec","duration_ms":100,"resources":[],"artifact_refs":[],"error":{"code":"PROCESS_EXIT_NONZERO","message":"程序退出码为 2"},"process":{"exit_code":2,"stdout_bytes":0,"stderr_bytes":80,"stdout_truncated":false,"stderr_truncated":false}}

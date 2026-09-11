@@ -1,0 +1,1 @@
+{"operation":"fs.read","duration_ms":1,"resources":[{"resource":"dataset://samples","source":"owner_manifest","revision":{"type":"owner_revision","value":"2026-09"}}],"artifact_refs":[],"fs_read":{"offset":0,"encoding":"base64","data":"AP8K","bytes_returned":3,"eof":true}}

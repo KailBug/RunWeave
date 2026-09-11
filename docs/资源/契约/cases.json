@@ -1,0 +1,17 @@
+[
+  {"file":"request-list.json","kind":"request"},
+  {"file":"request-read.json","kind":"request"},
+  {"file":"request-process.json","kind":"request"},
+  {"file":"request-invalid-unknown.json","kind":"request","code":"INVALID_REQUEST"},
+  {"file":"request-invalid-reference.json","kind":"request","code":"UNDECLARED_RESOURCE"},
+  {"file":"request-invalid-operation.json","kind":"request","code":"UNSUPPORTED_OPERATION"},
+  {"file":"request-invalid-path.json","kind":"request","code":"INVALID_REQUEST"},
+  {"file":"result-list.json","kind":"result"},
+  {"file":"result-read.json","kind":"result"},
+  {"file":"result-process.json","kind":"result"},
+  {"file":"result-failed.json","kind":"result"},
+  {"file":"result-denied.json","kind":"result"},
+  {"file":"result-invalid-call-error.json","kind":"result","code":"INVALID_RESULT"},
+  {"file":"result-invalid-bytes.json","kind":"result","code":"INVALID_RESULT"},
+  {"file":"result-invalid-success.json","kind":"result","code":"INVALID_RESULT"}
+]
