@@ -2,7 +2,7 @@
 
 使用 Go 开发的 MCP 执行后端。先通过 Codex、nanobot、loopx 等外部 Harness 验证，再开发自有 Harness。
 
-当前处于 P0：已有独立 MCP stdio 协议探针、SQLite/WebSocket/YAML/Linux 进程组隔离实验，以及三种业务操作的请求/结果校验和规范化摘要。正式 Server、Node、远程文件操作、进程执行和持久化服务尚未实现。
+P0 技术与契约阶段已完成：已有独立 MCP stdio 探针、SQLite/WebSocket/YAML/Linux 进程组实验、业务请求/结果及 Node 状态契约，并完成真实 Codex 的六工具契约验证。下一阶段为 P1；正式 Server、Node、远程文件操作、进程执行和持久化服务尚未实现。
 
 ## 构建与检查
 
@@ -22,6 +22,10 @@ Linux 可使用 `go build -o bin/mcp-probe ./cmd/mcp-probe` 后执行 `./bin/mcp
 基础依赖、Linux 进程组与 race 检查的复现步骤及结果见 [P0 基础依赖与进程验证](docs/验证/2026-09-10-P0基础依赖与进程验证.md)。这些测试使用临时数据库、loopback 连接和测试专用子进程，不开放业务执行入口。
 
 业务字段、错误与幂等规则见[业务请求与结果](docs/参考/业务请求与结果.md)，JSON 样例、固定摘要及 Windows/WSL 验证见[P0 业务契约验证](docs/验证/2026-09-10-P0业务契约验证.md)。`internal/contract` 仅作纯校验，不创建 execution 或执行操作。
+
+状态转换与 Node v1 消息契约已实现，见[状态与协议验证](docs/验证/2026-09-11-P0状态与协议验证.md)。六工具/schema 的真实客户端收尾已通过，见[验证记录](docs/验证/2026-09-11-P0真实客户端契约验证.md)；这是内存样例契约验证，尚未实现 Server–Node 业务链路。
+
+六工具内存探针可用 `go build -o bin/mcp-contract-probe.exe ./cmd/mcp-contract-probe` 构建，再执行 `./bin/mcp-contract-probe.exe check`。真实 Codex 复验的准备、临时配置和证据核对见[指南](docs/指南/P0真实客户端验证.md)。
 
 ## 外部 Harness 验证
 
