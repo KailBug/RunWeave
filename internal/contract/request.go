@@ -4,11 +4,12 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
-	"reflect"
 	"regexp"
 	"slices"
 	"strings"
 	"unicode"
+
+	"runweave/internal/strictjson"
 )
 
 const (
@@ -83,7 +84,7 @@ func DecodeRequest(data []byte) (Request, error) {
 	if len(data) > MaxRequestBytes {
 		return Request{}, fail(RequestTooLarge, "request exceeds 65536 bytes")
 	}
-	if err := strictDecode(data, &request); err != nil {
+	if err := strictjson.Decode(data, &request); err != nil {
 		return Request{}, fail(InvalidRequest, "invalid request JSON structure, fields or encoding")
 	}
 	if err := request.normalize(); err != nil {
@@ -99,7 +100,7 @@ func DecodeRequest(data []byte) (Request, error) {
 // CanonicalRequest revalidates even programmatically constructed values, and
 // never mutates the caller's slices/pointers. Use its bytes only with DigestVersion.
 func CanonicalRequest(request Request) ([]byte, error) {
-	if !validGoStrings(reflect.ValueOf(request)) {
+	if !strictjson.ValidStrings(request) {
 		return nil, fail(InvalidRequest, "invalid UTF-8 in request")
 	}
 	// Optional capabilities normalize to []; nil must not marshal to wire null.
