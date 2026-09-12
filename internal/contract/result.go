@@ -4,9 +4,10 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"mime"
-	"reflect"
 	"strings"
 	"time"
+
+	"runweave/internal/strictjson"
 )
 
 type Result struct {
@@ -72,7 +73,7 @@ func DecodeResult(data []byte) (Result, error) {
 	if len(data) > MaxResultBytes {
 		return Result{}, fail(InvalidResult, "result exceeds 1 MiB")
 	}
-	if err := strictDecode(data, &result); err != nil {
+	if err := strictjson.Decode(data, &result); err != nil {
 		return Result{}, fail(InvalidResult, "invalid result JSON structure, fields or encoding")
 	}
 	if err := result.validate(); err != nil {
@@ -86,7 +87,7 @@ func DecodeResult(data []byte) (Result, error) {
 }
 
 func EncodeResult(result Result) ([]byte, error) {
-	if !validGoStrings(reflect.ValueOf(result)) {
+	if !strictjson.ValidStrings(result) {
 		return nil, fail(InvalidResult, "invalid UTF-8 in result")
 	}
 	data, err := json.Marshal(result)
