@@ -1,0 +1,16 @@
+这是 RunWeave P0 真实客户端契约测试。只能调用 runweave_contract 提供的六个 MCP 工具；不要使用 shell、文件、网络、其他 MCP 服务或子代理。所有 Node、资源、执行、审批和产物都是无副作用的内存样例，不是真实业务执行。
+请实际逐步完成以下调用；不能只描述计划或根据提示伪造结果。根据工具返回的 execution_id 查询和取消。遇到预期错误继续测试。
+1. 调用 runweave.list_nodes，参数 {}。
+2. 调用 runweave.list_resources，参数 {"node_id":"p0-simulated-node","limit":1}。
+3. 调用 runweave.execute，参数 {"request_id":"codex-p0-list-20260911","correlation_id":"codex-p0-contract","requirements":{"resources":[{"resource":"repo://p0-fixture"}]},"operation":{"type":"fs.list","target":{"resource":"repo://p0-fixture","relative_path":"."},"max_entries":1}}。
+4. 完全相同的参数再次 execute，确认 execution_id 和 request_digest 相同。
+5. 仍用同一 request_id 和其余参数，但把 max_entries 改成 2，实际 execute 并观察 IDEMPOTENCY_CONFLICT。
+6. execute 参数 {"request_id":"codex-p0-read-20260911","requirements":{"resources":[{"resource":"repo://p0-fixture"}]},"operation":{"type":"fs.read","target":{"resource":"repo://p0-fixture","relative_path":"sample.txt"},"offset":0,"limit":4}}。
+7. execute 参数 {"request_id":"codex-p0-process-20260911","requirements":{"resources":[{"resource":"repo://p0-fixture"}]},"operation":{"type":"process.exec","program":"python","cwd":{"resource":"repo://p0-fixture","relative_path":"."},"args":[{"literal":"--version"},{"path":{"resource":"repo://p0-fixture","relative_path":"sample.txt"}}]}}。这只返回模拟 WAITING_APPROVAL，绝不执行 python。
+8. get_execution 参数 {"request_id":"codex-p0-process-20260911"}，观察审批与 poll_after_ms。
+9. 用第 7 步返回的 execution_id 调用 cancel_execution。此时应仍为 WAITING_APPROVAL，cancel_requested=true，不能宣称已停止。
+10. 用同一 execution_id 调用 get_execution，观察模拟确认 CANCELLED、outcome.start=not_started、quiescent=true。
+11. 用第 3 步实际返回的 artifact_refs 中的 artifact_id 调用 read_artifact，offset=0，limit=4，观察 base64 和 bytes_returned/eof。
+12. get_execution 参数 {"request_id":"codex-p0-missing"}，观察 EXECUTION_NOT_FOUND。
+13. read_artifact 参数 {"artifact_id":"codex-p0-missing"}，观察 ARTIFACT_NOT_FOUND。
+最后用简体中文简要报告实际结果与限制，不声称真实 Node/文件/进程已验收。不要额外调用工具。
