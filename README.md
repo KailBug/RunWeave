@@ -2,11 +2,24 @@
 
 使用 Go 开发的 MCP 执行后端。先通过 Codex、nanobot、loopx 等外部 Harness 验证，再开发自有 Harness。
 
-P0 技术与契约阶段已完成：已有独立 MCP stdio 探针、SQLite/WebSocket/YAML/Linux 进程组实验、业务请求/结果及 Node 状态契约，并完成真实 Codex 的六工具契约验证。下一阶段为 P1；正式 Server、Node、远程文件操作、进程执行和持久化服务尚未实现。
+P0 技术与契约阶段已完成，P1 单节点链路开发已开始。首批已实现统一 `runweave` CLI、严格版本化配置、Server/Node 分离的 SQLite 初始迁移与状态目录独占锁。正式 daemon、身份认证、持久 execution、远程文件操作与 MCP 业务链路尚未实现；进度见[开发进度](docs/进度/开发进度.md)。
 
 ## 构建与检查
 
 需要 Go 1.27.0。依赖版本由 `go.mod` / `go.sum` 固定。
+
+P1 产品入口（PowerShell，仓库根目录）：
+
+```powershell
+go build -o bin/runweave.exe ./cmd/runweave
+./bin/runweave.exe version
+./bin/runweave.exe config check --config docs/资源/P1配置/server.yaml
+./bin/runweave.exe state init --config docs/资源/P1配置/server.yaml
+```
+
+`state init` 在忽略的 `state/p1-server/` 创建或验证本机状态库，结束即释放锁；它不启动服务。配置、Linux 验证和备份恢复见[P1 指南](docs/指南/P1启动前检查与状态目录.md)，已验证范围和 race 环境缺口见[首批验证](docs/验证/2026-09-12-P1配置与状态存储验证.md)。
+
+P0 独立 MCP 探针和公共检查：
 
 ```powershell
 go build -o bin/mcp-probe.exe ./cmd/mcp-probe
