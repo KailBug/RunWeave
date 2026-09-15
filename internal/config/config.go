@@ -39,11 +39,13 @@ type Node struct {
 	NodeID    string `yaml:"node_id"`
 	ServerURL string `yaml:"server_url"`
 	TokenFile string `yaml:"token_file"`
+	TLSCAFile string `yaml:"tls_ca_file"`
 }
 
 type Client struct {
 	ServerURL string `yaml:"server_url"`
 	TokenFile string `yaml:"token_file"`
+	TLSCAFile string `yaml:"tls_ca_file"`
 }
 
 // Load resolves relative paths against the configuration's directory, never cwd.
@@ -109,9 +111,11 @@ func decode(data []byte, base string) (Config, error) {
 	}
 	if c.Node != nil {
 		resolve(&c.Node.TokenFile)
+		resolve(&c.Node.TLSCAFile)
 	}
 	if c.MCP != nil {
 		resolve(&c.MCP.TokenFile)
+		resolve(&c.MCP.TLSCAFile)
 	}
 	return c, nil
 }
@@ -234,4 +238,9 @@ func validateClient(rawURL, tokenFile string) error {
 		}
 	}
 	return nil
+}
+
+// ValidateClientOrigin applies the same fail-closed URL rules to runtime callers.
+func ValidateClientOrigin(rawURL string) error {
+	return validateClient(rawURL, "runtime-file-reference")
 }
