@@ -44,7 +44,11 @@ func TestReopenBackupAndRoleIsolation(t *testing.T) {
 			dir := filepath.Join(t.TempDir(), "中文 # state %25")
 			s := openTestStore(t, dir, role)
 			original := s.Info()
-			if original.Role != role || len(original.InstanceID) != 32 || original.SchemaVersion != 1 {
+			wantVersion := 1
+			if role == Server {
+				wantVersion = 2
+			}
+			if original.Role != role || len(original.InstanceID) != 32 || original.SchemaVersion != wantVersion {
 				t.Fatalf("bad info: %+v", original)
 			}
 			if err := s.Close(); err != nil {
@@ -184,7 +188,7 @@ func TestInitialMigrationRollbackAndRetry(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	migrations = append(migrations, migration{2, "002_failure.sql", "CREATE TABLE partial(value TEXT); INSERT INTO missing VALUES(1);", "test-only"})
+	migrations = append(migrations, migration{3, "003_failure.sql", "CREATE TABLE partial(value TEXT); INSERT INTO missing VALUES(1);", "test-only"})
 	if err := migrate(context.Background(), db, Server, migrations); err == nil {
 		t.Fatal("invalid initial migration accepted")
 	}
@@ -200,8 +204,8 @@ func TestInitialMigrationRollbackAndRetry(t *testing.T) {
 
 func TestInvalidHistoryAndIdentityFailClosed(t *testing.T) {
 	for name, stmt := range map[string]string{
-		"future":       "INSERT INTO schema_migrations VALUES(2,'002_future.sql','x','now')",
-		"gap":          "UPDATE schema_migrations SET version=2",
+		"future":       "INSERT INTO schema_migrations VALUES(3,'003_future.sql','x','now')",
+		"gap":          "DELETE FROM schema_migrations WHERE version=1",
 		"checksum":     "UPDATE schema_migrations SET checksum='changed'",
 		"name":         "UPDATE schema_migrations SET name='changed.sql'",
 		"empty":        "DELETE FROM schema_migrations",
@@ -377,7 +381,7 @@ func TestDatabasePathWithQuestionMark(t *testing.T) {
 		t.Skip("question marks are not valid Windows filenames")
 	}
 	s := openTestStore(t, filepath.Join(t.TempDir(), "state?mode=ro"), Server)
-	if s.Info().SchemaVersion != 1 {
+	if s.Info().SchemaVersion != 2 {
 		t.Fatal("URI interpreted path as options")
 	}
 }
