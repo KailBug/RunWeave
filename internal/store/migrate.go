@@ -72,25 +72,7 @@ func migrate(ctx context.Context, db *sql.DB, role Role, migrations []migration)
 	)`); err != nil {
 		return err
 	}
-	rows, err := tx.QueryContext(ctx, "SELECT version, name, checksum FROM schema_migrations ORDER BY version")
-	if err != nil {
-		return err
-	}
-	count := 0
-	for rows.Next() {
-		var version int
-		var name, checksum string
-		if err := rows.Scan(&version, &name, &checksum); err != nil {
-			rows.Close()
-			return err
-		}
-		if count >= len(migrations) || version != count+1 || name != migrations[count].name || checksum != migrations[count].checksum {
-			rows.Close()
-			return errors.New("unsupported or modified migration history; automatic downgrade is forbidden")
-		}
-		count++
-	}
-	err = errors.Join(rows.Err(), rows.Close())
+	count, err := migrationCount(ctx, tx, migrations)
 	if err != nil {
 		return err
 	}
@@ -125,4 +107,25 @@ func migrate(ctx context.Context, db *sql.DB, role Role, migrations []migration)
 		return errors.New("state role or instance identity is invalid")
 	}
 	return tx.Commit()
+}
+
+func migrationCount(ctx context.Context, tx *sql.Tx, migrations []migration) (int, error) {
+	rows, err := tx.QueryContext(ctx, "SELECT version, name, checksum FROM schema_migrations ORDER BY version")
+	if err != nil {
+		return 0, err
+	}
+	defer rows.Close()
+	count := 0
+	for rows.Next() {
+		var version int
+		var name, checksum string
+		if err := rows.Scan(&version, &name, &checksum); err != nil {
+			return 0, err
+		}
+		if count >= len(migrations) || version != count+1 || name != migrations[count].name || checksum != migrations[count].checksum {
+			return 0, errors.New("unsupported or modified migration history; automatic downgrade is forbidden")
+		}
+		count++
+	}
+	return count, rows.Err()
 }
