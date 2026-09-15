@@ -1,0 +1,7 @@
+# Loopback Server 配置，可用于预检、初始化和 server serve。
+version: 1
+role: server
+state_dir: ../../../state/p1-server
+log_level: info
+server:
+  listen: 127.0.0.1:7788

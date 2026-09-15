@@ -2,7 +2,7 @@
 
 使用 Go 开发的 MCP 执行后端。先通过 Codex、nanobot、loopx 等外部 Harness 验证，再开发自有 Harness。
 
-P0 技术与契约阶段已完成，P1 单节点链路开发已开始。首批已实现统一 `runweave` CLI、严格版本化配置、Server/Node 分离的 SQLite 初始迁移与状态目录独占锁。正式 daemon、身份认证、持久 execution、远程文件操作与 MCP 业务链路尚未实现；进度见[开发进度](docs/进度/开发进度.md)。
+P0 技术与契约阶段已完成，P1 单节点链路开发进行中。已有统一 CLI、严格配置、分角色 SQLite/独占锁，并新增 Server daemon、principal/Node 身份创建与在线撤销、凭据限权文件及 HTTP/TLS 认证检查。Node 注册、持久 execution、远程文件操作与 MCP 业务链路仍待实现；进度见[开发进度](docs/进度/开发进度.md)。
 
 ## 构建与检查
 
@@ -17,7 +17,7 @@ go build -o bin/runweave.exe ./cmd/runweave
 ./bin/runweave.exe state init --config docs/资源/P1配置/server.yaml
 ```
 
-`state init` 在忽略的 `state/p1-server/` 创建或验证本机状态库，结束即释放锁；它不启动服务。配置、Linux 验证和备份恢复见[P1 指南](docs/指南/P1启动前检查与状态目录.md)，已验证范围和 race 环境缺口见[首批验证](docs/验证/2026-09-12-P1配置与状态存储验证.md)。
+`state init` 在忽略的 `state/p1-server/` 创建/升级本机状态库，结束即释放锁；它不启动服务。基础操作见[状态目录指南](docs/指南/P1启动前检查与状态目录.md)；运行 Server、创建身份、认证与撤销见[接入指南](docs/指南/P1身份接入与Server运行.md)。Windows 全量 test/race/vet、WSL 新增模块与产品冒烟结果见[第二批验证](docs/验证/2026-09-14-P1身份与Server验证.md)；首批 race 待补项已补齐。
 
 P0 独立 MCP 探针和公共检查：
 

@@ -1,0 +1,9 @@
+# token_file 仅为引用，样例不含凭据，也不触发联网。
+version: 1
+role: node
+state_dir: ../../../state/p1-node
+log_level: info
+node:
+  node_id: node-local-1
+  server_url: http://127.0.0.1:7788
+  token_file: ../../../secrets/node-local-1.token

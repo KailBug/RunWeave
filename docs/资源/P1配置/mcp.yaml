@@ -1,0 +1,7 @@
+# 可用于 principal 的 auth check；当前尚不提供 MCP 业务服务。
+version: 1
+role: mcp
+log_level: info
+mcp:
+  server_url: http://127.0.0.1:7788
+  token_file: ../../../secrets/principal-local.token
