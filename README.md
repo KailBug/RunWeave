@@ -1,15 +1,14 @@
 # Archived
-guess what? OpenClaw had already built everything my project was supposed to do six months ago, but i didnt notice that,hhhhhhhh
+## **guess what ? OpenClaw had already built everything my project was supposed to do six months ago, but i didnt notice that, hhhhhhhh😂**
 
 
+~~# RunWeave~~
 
-# RunWeave
-
-使用 Go 开发的 MCP 执行后端。先通过 Codex、nanobot、loopx 等外部 Harness 验证，再开发自有 Harness。
+~~使用 Go 开发的 MCP 执行后端。先通过 Codex、nanobot、loopx 等外部 Harness 验证，再开发自有 Harness。
 
 P0 技术与契约阶段已完成，P1 单节点链路开发进行中。已有统一 CLI、严格配置、分角色 SQLite/独占锁，并新增 Server daemon、principal/Node 身份创建与在线撤销、凭据限权文件及 HTTP/TLS 认证检查。Node 注册、持久 execution、远程文件操作与 MCP 业务链路仍待实现；进度见[开发进度](docs/进度/开发进度.md)。
 
-## 构建与检查
+~~## 构建与检查~~
 
 需要 Go 1.27.0。依赖版本由 `go.mod` / `go.sum` 固定。
 
@@ -45,7 +44,7 @@ Linux 可使用 `go build -o bin/mcp-probe ./cmd/mcp-probe` 后执行 `./bin/mcp
 
 六工具内存探针可用 `go build -o bin/mcp-contract-probe.exe ./cmd/mcp-contract-probe` 构建，再执行 `./bin/mcp-contract-probe.exe check`。真实 Codex 复验的准备、临时配置和证据核对见[指南](docs/指南/P0真实客户端验证.md)。
 
-## 外部 Harness 验证
+~~## 外部 Harness 验证~~
 
 Codex 的临时启动方式（PowerShell；路径按实际工作目录调整）：
 
@@ -59,7 +58,7 @@ codex -c 'mcp_servers.runweave_probe.command="D:/RunWeave/bin/mcp-probe.exe"' -c
 
 配置依据：[Codex 官方 MCP 文档](https://developers.openai.com/codex/mcp)。nanobot、loopx 的具体项目、版本及接入方式待确认，不预设其配置与 Codex 相同。
 
-## 开发文档
+~~## 开发文档~~
 
 后续开发文档统一保存到 `docs/`，使用简体中文，并随代码同步维护。
 
@@ -67,7 +66,7 @@ codex -c 'mcp_servers.runweave_probe.command="D:/RunWeave/bin/mcp-probe.exe"' -c
 - [开发文档维护规范](docs/开发文档维护规范.md)
 - [当前开发进度](docs/进度/开发进度.md)
 
-## 总体规划资料
+~~## 总体规划资料~~
 
 根目录只维护两份总体规划，不列入开发文档：
 
