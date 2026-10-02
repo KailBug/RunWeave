@@ -1,3 +1,8 @@
+# Archived
+guess what? OpenClaw had already built everything my project was supposed to do six months ago, but i didnt notice that,hhhhhhhh
+
+
+
 # RunWeave
 
 使用 Go 开发的 MCP 执行后端。先通过 Codex、nanobot、loopx 等外部 Harness 验证，再开发自有 Harness。
